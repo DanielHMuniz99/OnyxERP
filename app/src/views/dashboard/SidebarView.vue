@@ -1,11 +1,21 @@
 <script setup lang="ts">
+type DashboardSection = 'overview' | 'customers' | 'inventory'
+
 const menuItems = [
-  { label: 'Visao geral', description: 'Resumo financeiro e operacional' },
-  { label: 'Clientes', description: 'Cadastros e relacionamento' },
-  { label: 'Estoque', description: 'Entradas, saidas e inventario' },
-  { label: 'Financeiro', description: 'Fluxo de caixa e cobrancas' },
-  { label: 'Relatorios', description: 'Indicadores e desempenho' },
+  { key: 'overview', label: 'Visao geral', description: 'Resumo financeiro e operacional' },
+  { key: 'customers', label: 'Clientes', description: 'Cadastros e relacionamento' },
+  { key: 'inventory', label: 'Estoque', description: 'Entradas, saidas e inventario' },
+  { key: 'finance', label: 'Financeiro', description: 'Fluxo de caixa e cobrancas' },
+  { key: 'reports', label: 'Relatorios', description: 'Indicadores e desempenho' },
 ]
+
+defineProps<{
+  activeSection: DashboardSection
+}>()
+
+const emit = defineEmits<{
+  navigate: [section: DashboardSection]
+}>()
 </script>
 
 <template>
@@ -17,15 +27,18 @@ const menuItems = [
     </div>
 
     <nav class="sidebar-nav" aria-label="Menu principal">
-      <a
+      <button
         v-for="item in menuItems"
         :key="item.label"
-        href="#"
+        type="button"
         class="nav-item"
+        :class="{ active: item.key === activeSection }"
+        :disabled="item.key !== 'overview' && item.key !== 'customers' && item.key !== 'inventory'"
+        @click="item.key === 'overview' || item.key === 'customers' || item.key === 'inventory' ? emit('navigate', item.key) : undefined"
       >
         <span>{{ item.label }}</span>
         <small>{{ item.description }}</small>
-      </a>
+      </button>
     </nav>
   </aside>
 </template>
@@ -75,17 +88,30 @@ const menuItems = [
 .nav-item {
   display: grid;
   gap: 0.2rem;
+  width: 100%;
+  border: 0;
   padding: 0.95rem 1rem;
   border-radius: 14px;
-  text-decoration: none;
+  text-align: left;
   color: inherit;
   background: rgba(255, 255, 255, 0.06);
   transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .nav-item:hover {
   transform: translateX(4px);
   background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(184, 240, 196, 0.25);
+}
+
+.nav-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 .nav-item span {

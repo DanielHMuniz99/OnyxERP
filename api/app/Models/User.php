@@ -4,9 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Attributes\HasMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany as HasManyRelation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -30,5 +32,17 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_active' => 'boolean',
         ];
+    }
+
+    #[HasMany(Customer::class, 'created_by')]
+    public function customers(): HasManyRelation
+    {
+        return $this->hasMany(Customer::class, 'created_by');
+    }
+
+    #[HasMany(Inventory::class, 'created_by')]
+    public function inventories(): HasManyRelation
+    {
+        return $this->hasMany(Inventory::class, 'created_by');
     }
 }

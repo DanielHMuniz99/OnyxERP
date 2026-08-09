@@ -158,20 +158,21 @@ async function handleSubmit(): Promise<void> {
         </button>
       </div>
 
-      <form class="auth-form" @submit.prevent="handleSubmit">
+      <form class="auth-form form-layout" @submit.prevent="handleSubmit">
         <template v-if="mode === 'register'">
-          <label for="name">Nome completo</label>
-          <input id="name" v-model="registerData.name" name="name" type="text" required />
+          <label for="name" class="form-label">Nome completo</label>
+          <input id="name" v-model="registerData.name" class="form-control" name="name" type="text" required />
         </template>
 
         <template v-if="mode === 'login'">
-          <label for="login_email">E-mail</label>
-          <input id="login_email" v-model="loginData.email" name="email" type="email" required />
+          <label for="login_email" class="form-label">E-mail</label>
+          <input id="login_email" v-model="loginData.email" class="form-control" name="email" type="email" required />
 
-          <label for="login_password">Senha</label>
+          <label for="login_password" class="form-label">Senha</label>
           <input
             id="login_password"
             v-model="loginData.password"
+            class="form-control"
             name="password"
             type="password"
             minlength="8"
@@ -180,44 +181,48 @@ async function handleSubmit(): Promise<void> {
         </template>
 
         <template v-else>
-          <label for="register_email">E-mail</label>
+          <label for="register_email" class="form-label">E-mail</label>
           <input
             id="register_email"
             v-model="registerData.email"
+            class="form-control"
             name="email"
             type="email"
             required
           />
 
-          <label for="register_document">Documento</label>
+          <label for="register_document" class="form-label">Documento</label>
           <input
             id="register_document"
             v-model="registerData.document"
+            class="form-control"
             name="document"
             type="text"
             placeholder="CPF ou CNPJ"
           />
 
-          <label for="register_phone">Telefone</label>
+          <label for="register_phone" class="form-label">Telefone</label>
           <input
             id="register_phone"
             v-model="registerData.phone"
+            class="form-control"
             name="phone"
             type="text"
             placeholder="(11) 99999-9999"
           />
 
-          <label for="register_role">Perfil de acesso</label>
-          <select id="register_role" v-model="registerData.role" name="role">
+          <label for="register_role" class="form-label">Perfil de acesso</label>
+          <select id="register_role" v-model="registerData.role" class="form-select" name="role">
             <option value="operator">Operador</option>
             <option value="manager">Gerente</option>
             <option value="admin">Administrador</option>
           </select>
 
-          <label for="register_password">Senha</label>
+          <label for="register_password" class="form-label">Senha</label>
           <input
             id="register_password"
             v-model="registerData.password"
+            class="form-control"
             name="password"
             type="password"
             minlength="8"
@@ -226,10 +231,11 @@ async function handleSubmit(): Promise<void> {
         </template>
 
         <template v-if="mode === 'register'">
-          <label for="password_confirmation">Confirmar senha</label>
+          <label for="password_confirmation" class="form-label">Confirmar senha</label>
           <input
             id="password_confirmation"
             v-model="registerData.password_confirmation"
+            class="form-control"
             name="password_confirmation"
             type="password"
             minlength="8"
@@ -237,13 +243,13 @@ async function handleSubmit(): Promise<void> {
           />
         </template>
 
-        <button type="submit" :disabled="isSubmitting">
+        <button type="submit" class="form-primary-button" :disabled="isSubmitting">
           {{ isSubmitting ? 'Processando...' : submitLabel }}
         </button>
       </form>
 
-      <p v-if="successMessage" class="feedback success">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="feedback error">{{ errorMessage }}</p>
+      <p v-if="successMessage" class="form-feedback success">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="form-feedback error">{{ errorMessage }}</p>
     </section>
   </main>
 </template>
@@ -325,63 +331,8 @@ h1 {
   box-shadow: 0 8px 18px rgba(30, 42, 58, 0.14);
 }
 
-.auth-form {
-  display: grid;
-  gap: 0.45rem;
-}
-
-label {
-  margin-top: 0.35rem;
-  font-size: 0.9rem;
-  color: #2f3f53;
-}
-
-input,
-select {
-  border: 1px solid #c8d2de;
-  border-radius: 10px;
-  padding: 0.8rem 0.9rem;
-  font-size: 1rem;
-  color: #0f172a;
-  background: #ffffff;
-}
-
-input:focus,
-select:focus {
-  outline: 2px solid #9ed8ad;
-  outline-offset: 1px;
-}
-
-.auth-form button {
-  margin-top: 0.8rem;
-  border: 0;
-  border-radius: 10px;
-  padding: 0.9rem;
-  font-weight: 700;
-  color: #ffffff;
-  background: linear-gradient(120deg, #1f8f4e, #2f9f5f);
-  cursor: pointer;
-}
-
-.auth-form button:disabled {
-  cursor: wait;
-  opacity: 0.8;
-}
-
-.feedback {
-  margin: 1rem 0 0;
-  border-radius: 10px;
-  padding: 0.75rem 0.85rem;
-  font-size: 0.93rem;
-}
-
-.feedback.success {
-  background: #e5f7ea;
-  color: #16653b;
-}
-
-.feedback.error {
-  background: #fde8e8;
-  color: #9f1d1d;
+.auth-card {
+  --form-control-focus: #9ed8ad;
+  --form-primary-background: linear-gradient(120deg, #1f8f4e, #2f9f5f);
 }
 </style>

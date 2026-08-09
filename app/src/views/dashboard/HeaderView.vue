@@ -1,6 +1,8 @@
 <script setup lang="ts">
 defineProps<{
   userName: string
+  sectionLabel: string
+  sectionTitle: string
 }>()
 
 const emit = defineEmits<{
@@ -11,8 +13,8 @@ const emit = defineEmits<{
 <template>
   <header class="dashboard-header">
     <div>
-      <p class="section-label">Painel inicial</p>
-      <h1>Bem-vindo, {{ userName }}</h1>
+      <p class="section-label">{{ sectionLabel }}</p>
+      <h1>{{ sectionTitle }}, {{ userName }}</h1>
     </div>
 
     <div class="header-actions">

@@ -94,6 +94,7 @@ onMounted(() => {
   <DashboardView
     v-else-if="authUser"
     :user="authUser"
+    :token="authToken"
     @logout="handleLogout"
   />
 
